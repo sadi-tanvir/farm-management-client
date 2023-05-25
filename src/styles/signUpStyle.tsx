@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logoContainer: {
-        marginTop: 100,
+        marginTop: 50,
     },
     logo: {
         width: 200,
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         alignItems: 'center',
-        marginTop: 15
+        marginTop: 30
     },
     header: {
         fontWeight: 'bold',
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         color: '#000',
         textTransform: 'uppercase',
         textAlign: 'center',
-        marginBottom: 10
+        marginBottom: 20
     },
     inputFields: {
         width: '100%',

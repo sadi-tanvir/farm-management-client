@@ -1,7 +1,9 @@
 import { View, Text, Image, StyleSheet, TextInput, Button } from 'react-native'
 import React, { useState } from 'react'
-import styles from "../../styles/Login/LoginStyle"
+import styles from "../../styles/LoginStyle"
 import TextInputField from '../common/TextInputField'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import CustomButton from '../common/CustomButton';
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -24,20 +26,19 @@ const Login = () => {
                 <Text style={styles.header}>Login</Text>
                 <View style={styles.inputFields}>
                     <TextInputField
-                        // placeholder={'example@email.com'}
-                        // handleInput={(e: string) => setEmail(e)}
-                        type='passwords'
-                        icon={require("../../img/password.png")}
+                        icon={<MaterialCommunityIcons style={{ marginRight: 6, marginLeft: 4 }} name="email" color={'#f53b57'} size={22} />}
+                        placeholder="Email"
+                        type="email"
+                        inputModeType="text"
                     />
-                    {/* 
                     <TextInputField
-                        placeholder={'type password'}
-                        marginTop={10}
-                        handleInput={(e: string) => setPassword(e)}
-                    /> */}
+                        icon={<MaterialCommunityIcons style={{ marginRight: 6, marginLeft: 4 }} name="lock" color={'#f53b57'} size={22} />}
+                        placeholder="Password"
+                        type="password"
+                        inputModeType="text"
+                    />
+                    <CustomButton title="Login" />
                 </View>
-
-                <Button onPress={handlePress} title='Submit'></Button>
             </View>
         </View>
     )

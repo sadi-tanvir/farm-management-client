@@ -5,6 +5,7 @@ import Login from '../screens/Login/Login';
 import CustomDrawer from './CustomDrawer';
 import Contact from './components/Contact';
 import Dashboard from './Dashboard';
+import SignUp from '../screens/SignUp/SignUp';
 
 
 const Drawer = createDrawerNavigator();
@@ -26,7 +27,8 @@ const DrawerNavigator = () => {
 
       {/* <Drawer.Screen name='Login' component={Login} options={{headerShown: true}} /> */}
       <Drawer.Screen name='Dashboard' component={Dashboard} options={{ headerShown: true }} />
-      <Drawer.Screen name='Contact' component={Contact} options={{ headerShown: true }} />
+      <Drawer.Screen name='Login' component={Login} options={{ headerShown: true }} />
+      <Drawer.Screen name='Sign Up' component={SignUp} options={{ headerShown: true }} />
     </Drawer.Navigator>
   );
 };
