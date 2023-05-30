@@ -13,10 +13,10 @@ const Splash = ({ navigation }: { navigation: any }) => {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Image
                 source={require("../../img/logo.png")}
-                style={{ width: 250, height: 50 }}
+                style={{ width: 150, height: 50 }}
             />
         </View>
-    )
-}
+    );
+};
 
 export default Splash

@@ -6,10 +6,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logoContainer: {
-        marginTop: 50,
+        marginTop: 80,
     },
     logo: {
-        width: 200,
+        width: 150,
         height: 50
     },
     formsContainer: {

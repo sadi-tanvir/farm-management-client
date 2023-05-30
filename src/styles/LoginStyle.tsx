@@ -6,17 +6,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logoContainer: {
-        marginTop: 100,
+        marginTop: 120,
     },
     logo: {
-        width: 200,
+        width: 150,
         height: 50
     },
     formsContainer: {
         flex: 1,
         width: '100%',
         alignItems: 'center',
-        marginTop: 30
+        marginTop: 40
     },
     header: {
         fontWeight: 'bold',

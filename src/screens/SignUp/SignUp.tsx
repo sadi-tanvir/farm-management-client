@@ -1,52 +1,63 @@
-import { View, Text, Image, StyleSheet, TextInput, Button } from 'react-native'
+import { View, Text, Image, StyleSheet, TextInput, Button, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import styles from "../../styles/signUpStyle"
-import TextInputField from '../common/TextInputField'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import CustomButton from '../common/CustomButton';
-import { gql, useMutation } from '@apollo/client';
-
-const signUpMutation = gql`
-mutation createUser($info:UserSignUpInputs!) {
-    signUpUser(data:$info){
-        status
-        message
-    }
-}
-`;
+import { useMutation } from '@apollo/client';
+import { signUpMutation } from '../../gql/mutations/userMutation';
+import CustomButton from '../../components/common/CustomButton';
+import TextInputField from '../../components/common/TextInputField';
+import CustomMessageAlert from '../../components/common/CustomMessageAlert';
+import CustomErrorMessage from '../../components/common/CustomErrorMessage';
+import CustomWarningAlert from '../../components/common/CustomWarningAlert';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-const SignUp = () => {
+const SignUp = ({ navigation }) => {
+    const [showAlert, setShowAlert] = useState(false);
+    const [showMessageAlert, setShowMessageAlert] = useState(false);
+    const [showErrorMessageAlert, setShowErrorMessageAlert] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("")
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
-console.warn(name, email, phone, password);
 
+    // mutations 
     const [handleSignUpMUtation, { data, loading, error }] = useMutation(signUpMutation);
 
-    const handlePress = () => {
-
-        handleSignUpMUtation({
-            variables: {
-                info: {
-                    name,
-                    email,
-                    password,
-                    phone
+    // handle submit function
+    const handleSignUp = () => {
+        if (name && email && phone && password) {
+            // SignUp mutation
+            handleSignUpMUtation({
+                variables: {
+                    info: {
+                        name,
+                        email,
+                        password,
+                        phone
+                    }
                 }
-            }
-        });
+            });
+            setShowAlert(false)
+        } else {
+            setShowErrorMessageAlert(true)
+            setErrorMessage("Sorry! You can't leave empty input field")
+        }
     };
 
-
-    // const handleChange = (e: string) => {
-
-    // }
-
     useEffect(() => {
-        console.log('from signup', data);
-    }, [data])
+        // error message
+        if (error?.message) {
+            setErrorMessage(error?.message)
+            setShowErrorMessageAlert(!showErrorMessageAlert);
+        }
+
+        // confirmation message
+        if (data?.signUpUser.message) {
+            setShowMessageAlert(!showMessageAlert)
+        };
+    }, [data, error]);
 
     return (
         <View style={styles.container}>
@@ -89,11 +100,40 @@ console.warn(name, email, phone, password);
                         inputModeType="text"
                     />
                     <CustomButton
-                        handlePress={handlePress}
+                        handlePress={() => setShowAlert(!showAlert)}
                         title="Sign Up"
                     />
+                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginTop: 10 }}>
+                        <Text>Already have an account?</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                            <Text style={{ color: '#ff3f34', marginLeft: 3 }}>Login</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
+
+            {/* success message */}
+            <CustomMessageAlert
+                showMessageAlert={showMessageAlert}
+                setShowMessageAlert={setShowMessageAlert}
+                title="Success Message"
+                message={data?.signUpUser.message}
+            />
+
+            {/* success message */}
+            <CustomErrorMessage
+                showMessageAlert={showErrorMessageAlert}
+                setShowMessageAlert={setShowErrorMessageAlert}
+                title="Error Message"
+                message={errorMessage}
+            />
+
+            {/* warning message */}
+            <CustomWarningAlert
+                showAlert={showAlert}
+                setShowAlert={setShowAlert}
+                handleSubmit={handleSignUp}
+            />
         </View>
     )
 }

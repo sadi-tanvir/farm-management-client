@@ -1,74 +1,34 @@
+import { View, Text, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
-import { View, TextInput, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import CustomWarningAlert from '../../components/common/CustomWarningAlert'
 
-const Screen3 = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-
-  const handleNameChange = (text:any) => {
-    setName(text);
-  };
-
-  const handleEmailChange = (text:any) => {
-    setEmail(text);
-  };
-
-  const handleSubmit = () => {
-    // Handle form submission logic here
-    console.log('Name:', name);
-    console.log('Email:', email);
-  };
+export default function App() {
+  const [showAlert, setShowAlert] = useState(false);
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your name"
-        onChangeText={handleNameChange}
-        value={name}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your email"
-        onChangeText={handleEmailChange}
-        value={email}
-        keyboardType="email-address"
-      />
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Submit</Text>
+    <View>
+      <TouchableOpacity
+        onPress={() => setShowAlert(!showAlert)}
+        style={{
+          backgroundColor: 'blue',
+          margin: 40,
+          borderRadius: 10,
+          width: 110,
+          elevation: 10,
+          padding: 10,
+        }}>
+        <Text style={{ fontSize: 22, color: 'white' }}>Click Me</Text>
       </TouchableOpacity>
+
+
+      <CustomWarningAlert
+        showAlert={showAlert}
+        setShowAlert={setShowAlert}
+        handleSubmit={() => {
+          console.log("Confirm button pressed")
+          setShowAlert(false)
+        }}
+      />
     </View>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
-  },
-  input: {
-    width: '100%',
-    height: 40,
-    marginBottom: 16,
-    paddingHorizontal: 12,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 4,
-  },
-  button: {
-    backgroundColor: '#ff6f00',
-    borderRadius: 4,
-    paddingHorizontal: 100,
-    paddingVertical: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-});
-
-export default Screen3;
+}
